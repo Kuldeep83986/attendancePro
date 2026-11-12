@@ -11,7 +11,17 @@ const app = express();
 // CORS
 app.use(
   cors({
-    origin: process.env.CORS_ORIGIN || 'http://localhost:5173',
+    origin: (origin, callback) => {
+      // If no CORS_ORIGIN is specified, allow request origin dynamically
+      if (!origin || !process.env.CORS_ORIGIN) {
+        return callback(null, true);
+      }
+      const allowed = process.env.CORS_ORIGIN.split(',').map((o) => o.trim());
+      if (allowed.includes('*') || allowed.includes(origin)) {
+        return callback(null, true);
+      }
+      return callback(null, true);
+    },
     credentials: true,
   })
 );
