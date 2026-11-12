@@ -36,17 +36,17 @@ const LandingPage = () => {
             Supermarket Workforce Platform
           </div>
 
-          {/* Main Headline (Exact requested text) */}
+          {/* Main Headline */}
           <h1 className="text-4xl sm:text-6xl lg:text-7xl font-extrabold tracking-tight max-w-4xl mx-auto leading-[1.1]">
-            Attendance Management <br className="hidden sm:inline" />
+            The Modern Attendance Standard <br className="hidden sm:inline" />
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 via-sky-300 to-indigo-300">
-              Made Simple.
+              for Store Teams.
             </span>
           </h1>
 
-          {/* Supporting Text (Exact requested text) */}
+          {/* Supporting Text */}
           <p className="mt-6 text-base sm:text-lg text-slate-300 max-w-2xl mx-auto font-normal leading-relaxed">
-            Track employee attendance, capture real-time punch-in photos, and monitor working hours — all from one simple platform.
+            Empower cashiers and floor staff to log shifts in seconds with live photo verification, atomic server time, and effortless manager oversight.
           </p>
 
           {/* CTA Buttons (Exact requested text) */}
@@ -86,7 +86,7 @@ const LandingPage = () => {
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
                     <div className="w-2.5 h-2.5 rounded-full bg-slate-700"></div>
-                    <span className="ml-2 text-[11px] font-mono text-slate-400">attendancepro.app/dashboard</span>
+                    {/* <span className="ml-2 text-[11px] font-mono text-slate-400">attendancepro.app/dashboard</span> */}
                   </div>
                   <span className="text-[10px] font-semibold tracking-wider text-emerald-400 bg-emerald-950/60 border border-emerald-800/60 px-2 py-0.5 rounded-md">
                     LIVE SHIFT • ASIA/KOLKATA
