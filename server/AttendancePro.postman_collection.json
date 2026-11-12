@@ -1,0 +1,281 @@
+{
+  "info": {
+    "name": "AttendancePro API",
+    "description": "Collection for AttendancePro v1.0 MERN Backend APIs",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    { "key": "baseUrl", "value": "http://localhost:5000/api" },
+    { "key": "adminToken", "value": "" },
+    { "key": "employeeToken", "value": "" }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "item": [
+        {
+          "name": "Health Check",
+          "request": {
+            "method": "GET",
+            "url": "{{baseUrl}}/health"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication",
+      "item": [
+        {
+          "name": "Initial Admin Setup",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Store Manager\",\n  \"email\": \"admin@supermarket.com\",\n  \"phone\": \"9876543210\",\n  \"password\": \"Admin@123\",\n  \"setupKey\": \"AttendancePro_Setup_2026\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/setup-admin"
+          }
+        },
+        {
+          "name": "Employee Registration",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Ramesh Kumar\",\n  \"email\": \"ramesh@supermarket.com\",\n  \"phone\": \"9876543211\",\n  \"password\": \"Employee@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/register"
+          }
+        },
+        {
+          "name": "Admin / Employee Login",
+          "request": {
+            "method": "POST",
+            "header": [{ "key": "Content-Type", "value": "application/json" }],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"email\": \"admin@supermarket.com\",\n  \"password\": \"Admin@123\"\n}"
+            },
+            "url": "{{baseUrl}}/auth/login"
+          }
+        },
+        {
+          "name": "Get Profile (Me)",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/auth/me"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Employee Attendance",
+      "item": [
+        {
+          "name": "Get Today Status",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{employeeToken}}" }
+            ],
+            "url": "{{baseUrl}}/attendance/today"
+          }
+        },
+        {
+          "name": "Punch In (Camera Photo Required)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{employeeToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "description": "Live camera capture image file (jpg/jpeg/png)"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/attendance/punch-in"
+          }
+        },
+        {
+          "name": "Punch Out (Camera Photo Required)",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{employeeToken}}" }
+            ],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "photo",
+                  "type": "file",
+                  "description": "Live camera capture image file (jpg/jpeg/png)"
+                }
+              ]
+            },
+            "url": "{{baseUrl}}/attendance/punch-out"
+          }
+        },
+        {
+          "name": "My Attendance History",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{employeeToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/attendance/my?page=1&limit=30",
+              "host": ["{{baseUrl}}"],
+              "path": ["attendance", "my"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "30" }
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admin Management",
+      "item": [
+        {
+          "name": "Admin Dashboard Stats",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/dashboard"
+          }
+        },
+        {
+          "name": "Get Pending Employee Registrations",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/pending"
+          }
+        },
+        {
+          "name": "Approve Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/approve/:userId"
+          }
+        },
+        {
+          "name": "Reject Employee",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/reject/:userId"
+          }
+        },
+        {
+          "name": "Get All Employees",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/employees"
+          }
+        },
+        {
+          "name": "Get All Attendance Records",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": {
+              "raw": "{{baseUrl}}/admin/attendance?page=1&limit=50",
+              "host": ["{{baseUrl}}"],
+              "path": ["admin", "attendance"],
+              "query": [
+                { "key": "page", "value": "1" },
+                { "key": "limit", "value": "50" },
+                { "key": "date", "value": "2026-11-12", "disabled": true },
+                { "key": "employeeId", "value": "EMP-001", "disabled": true }
+              ]
+            }
+          }
+        },
+        {
+          "name": "Finalize Attendance Day",
+          "request": {
+            "method": "POST",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"date\": \"2026-11-12\",\n  \"force\": false\n}"
+            },
+            "url": "{{baseUrl}}/admin/attendance/finalize-day"
+          }
+        },
+        {
+          "name": "Correct Attendance (with Audit Trail)",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"field\": \"status\",\n  \"newValue\": \"present\",\n  \"reason\": \"Employee was on floor duty verified via store manager\"\n}"
+            },
+            "url": "{{baseUrl}}/admin/attendance/:attendanceId/correct"
+          }
+        },
+        {
+          "name": "Get Settings",
+          "request": {
+            "method": "GET",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" }
+            ],
+            "url": "{{baseUrl}}/admin/settings"
+          }
+        },
+        {
+          "name": "Update Settings",
+          "request": {
+            "method": "PUT",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{adminToken}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"shiftStart\": \"07:00\",\n  \"shiftEnd\": \"16:00\",\n  \"breakDeduction\": 0,\n  \"presentThreshold\": 540,\n  \"halfDayThreshold\": 240\n}"
+            },
+            "url": "{{baseUrl}}/admin/settings"
+          }
+        }
+      ]
+    }
+  ]
+}
+
