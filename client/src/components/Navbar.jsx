@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import {
@@ -12,13 +12,15 @@ import {
   Settings,
   Menu,
   X,
+  ChevronRight,
+  Sparkles,
 } from 'lucide-react';
 
 const Navbar = () => {
   const { user, isAuthenticated, isAdmin, isEmployee, logout } = useAuth();
   const navigate = useNavigate();
   const location = useLocation();
-  const [mobileMenuOpen, setMobileMenuOpen] = React.useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const handleLogout = () => {
     logout();
@@ -28,44 +30,50 @@ const Navbar = () => {
   const isActive = (path) => location.pathname === path;
 
   return (
-    <nav className="bg-slate-900 border-b border-slate-800 text-white sticky top-0 z-40">
+    <header className="sticky top-0 z-40 bg-slate-900/95 backdrop-blur-md border-b border-slate-800/80 text-white transition-all">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
-          {/* Brand Logo */}
-          <Link to="/" className="flex items-center gap-2.5 group">
-            <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:bg-blue-500 transition-colors">
-              <CalendarCheck className="w-5 h-5" />
+          {/* Brand Logo & Tagline */}
+          <Link to="/" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-xl bg-gradient-to-br from-blue-600 to-indigo-700 flex items-center justify-center text-white shadow-md shadow-blue-500/20 group-hover:scale-105 transition-all">
+              <CalendarCheck className="w-5 h-5 text-white" />
             </div>
             <div>
-              <span className="font-bold text-lg tracking-tight text-white">Attendance</span>
-              <span className="font-bold text-lg text-emerald-400">Pro</span>
-
+              <div className="flex items-center gap-1.5 leading-none">
+                <span className="font-bold text-lg tracking-tight text-white">Attendance</span>
+                <span className="font-bold text-lg text-blue-400">Pro</span>
+              </div>
+              <p className="text-[10px] text-slate-400 font-medium tracking-tight mt-0.5 hidden sm:block">
+                Smart Attendance. Simple Management.
+              </p>
             </div>
           </Link>
 
-          {/* Desktop Navigation */}
-          <div className="hidden md:flex items-center gap-1">
+          {/* Center Navigation Links */}
+          <nav className="hidden md:flex items-center gap-1 bg-slate-800/50 p-1 rounded-xl border border-slate-700/50">
             {isAuthenticated ? (
               <>
                 {isEmployee && (
                   <>
                     <Link
                       to="/employee/dashboard"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/employee/dashboard')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/employee/dashboard')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <Clock className="w-4 h-4" /> Today
+                      <Clock className="w-3.5 h-3.5" /> Today's Shift
                     </Link>
                     <Link
                       to="/employee/history"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/employee/history')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/employee/history')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <CalendarCheck className="w-4 h-4" /> My History
+                      <CalendarCheck className="w-3.5 h-3.5" /> My History
                     </Link>
                   </>
                 )}
@@ -74,48 +82,53 @@ const Navbar = () => {
                   <>
                     <Link
                       to="/admin/dashboard"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/admin/dashboard')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/admin/dashboard')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <LayoutDashboard className="w-4 h-4" /> Dashboard
-                    </Link>
-                    <Link
-                      to="/admin/approvals"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/admin/approvals')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
-                    >
-                      <ShieldCheck className="w-4 h-4" /> Approvals
+                      <LayoutDashboard className="w-3.5 h-3.5" /> Dashboard
                     </Link>
                     <Link
                       to="/admin/attendance"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/admin/attendance')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/admin/attendance')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <CalendarCheck className="w-4 h-4" /> Attendance Records
+                      <CalendarCheck className="w-3.5 h-3.5" /> Attendance
                     </Link>
                     <Link
                       to="/admin/employees"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/admin/employees')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/admin/employees')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <Users className="w-4 h-4" /> Employees
+                      <Users className="w-3.5 h-3.5" /> Employees
+                    </Link>
+                    <Link
+                      to="/admin/approvals"
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/admin/approvals')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
+                    >
+                      <ShieldCheck className="w-3.5 h-3.5" /> Requests
                     </Link>
                     <Link
                       to="/admin/settings"
-                      className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors flex items-center gap-1.5 ${isActive('/admin/settings')
-                        ? 'bg-blue-600 text-white'
-                        : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                        }`}
+                      className={`px-3 py-1.5 rounded-lg text-xs font-semibold transition-all flex items-center gap-1.5 ${
+                        isActive('/admin/settings')
+                          ? 'bg-blue-600 text-white shadow-xs'
+                          : 'text-slate-300 hover:text-white hover:bg-slate-700/50'
+                      }`}
                     >
-                      <Settings className="w-4 h-4" /> Settings
+                      <Settings className="w-3.5 h-3.5" /> Shift Rules
                     </Link>
                   </>
                 )}
@@ -124,26 +137,27 @@ const Navbar = () => {
               <>
                 <Link
                   to="/"
-                  className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${isActive('/') ? 'text-white' : 'text-slate-300 hover:text-white hover:bg-slate-800'
-                    }`}
+                  className={`px-3.5 py-1.5 rounded-lg text-xs font-semibold transition-all ${
+                    isActive('/') ? 'bg-slate-700/80 text-white' : 'text-slate-300 hover:text-white'
+                  }`}
                 >
                   Overview
                 </Link>
               </>
             )}
-          </div>
+          </nav>
 
-          {/* Right Action Buttons */}
+          {/* Right Action Area */}
           <div className="hidden md:flex items-center gap-3">
             {isAuthenticated ? (
               <div className="flex items-center gap-3">
-                <div className="flex items-center gap-2 px-3 py-1.5 rounded-lg bg-slate-800 border border-slate-700">
-                  <div className="w-7 h-7 rounded-full bg-blue-600 flex items-center justify-center text-xs font-bold text-white">
+                <div className="flex items-center gap-2.5 px-3 py-1.5 rounded-xl bg-slate-800/80 border border-slate-700/80">
+                  <div className="w-7 h-7 rounded-lg bg-blue-600/90 text-white font-bold text-xs flex items-center justify-center">
                     {user?.name?.charAt(0) || 'U'}
                   </div>
                   <div className="text-left">
-                    <p className="text-xs font-semibold text-white leading-tight">{user?.name}</p>
-                    <p className="text-[10px] text-slate-400 capitalize">
+                    <p className="text-xs font-bold text-slate-100 leading-none">{user?.name}</p>
+                    <p className="text-[10px] text-slate-400 capitalize mt-0.5 font-medium">
                       {user?.employeeId ? `${user.employeeId} • ${user.role}` : user?.role}
                     </p>
                   </div>
@@ -151,7 +165,7 @@ const Navbar = () => {
                 <button
                   onClick={handleLogout}
                   title="Sign out"
-                  className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+                  className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 border border-transparent hover:border-slate-700 transition-all"
                 >
                   <LogOut className="w-4 h-4" />
                 </button>
@@ -160,43 +174,43 @@ const Navbar = () => {
               <div className="flex items-center gap-2">
                 <Link
                   to="/login"
-                  className="px-4 py-2 text-sm font-medium text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg transition-colors"
+                  className="px-3.5 py-2 text-xs font-semibold text-slate-300 hover:text-white hover:bg-slate-800/80 rounded-xl transition-all"
                 >
-                  Sign In
+                  Employee Login
                 </Link>
                 <Link
                   to="/register"
-                  className="px-4 py-2 text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500 rounded-lg shadow-sm shadow-blue-500/20 transition-colors"
+                  className="px-4 py-2 text-xs font-bold text-white bg-blue-600 hover:bg-blue-500 rounded-xl shadow-sm shadow-blue-500/20 hover:shadow-md hover:shadow-blue-500/30 transition-all"
                 >
-                  Register Staff
+                  Get Started
                 </Link>
               </div>
             )}
           </div>
 
-          {/* Mobile menu trigger */}
+          {/* Mobile hamburger */}
           <div className="flex md:hidden">
             <button
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
+              className="p-2 rounded-xl text-slate-400 hover:text-white hover:bg-slate-800 transition-colors"
             >
-              {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              {mobileMenuOpen ? <X className="w-5 h-5" /> : <Menu className="w-5 h-5" />}
             </button>
           </div>
         </div>
       </div>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Drawer */}
       {mobileMenuOpen && (
-        <div className="md:hidden border-t border-slate-800 bg-slate-900 px-4 pt-3 pb-5 space-y-2">
+        <div className="md:hidden border-t border-slate-800 bg-slate-900/95 px-4 pt-3 pb-6 space-y-2 animate-fade-in-up">
           {isAuthenticated ? (
             <>
-              <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/80 mb-3 border border-slate-700">
-                <div className="w-9 h-9 rounded-full bg-blue-600 flex items-center justify-center font-bold text-white">
+              <div className="flex items-center gap-3 p-3 rounded-xl bg-slate-800/90 border border-slate-700/80 mb-3">
+                <div className="w-9 h-9 rounded-xl bg-blue-600 flex items-center justify-center font-bold text-white text-sm">
                   {user?.name?.charAt(0) || 'U'}
                 </div>
                 <div>
-                  <p className="text-sm font-semibold text-white">{user?.name}</p>
+                  <p className="text-sm font-bold text-white">{user?.name}</p>
                   <p className="text-xs text-slate-400">
                     {user?.employeeId ? `${user.employeeId} (${user.role})` : user?.role}
                   </p>
@@ -204,62 +218,62 @@ const Navbar = () => {
               </div>
 
               {isEmployee && (
-                <>
+                <div className="space-y-1">
                   <Link
                     to="/employee/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
-                    <Clock className="w-4 h-4 text-blue-400" /> Today's Attendance
+                    <Clock className="w-4 h-4 text-blue-400" /> Today's Shift
                   </Link>
                   <Link
                     to="/employee/history"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
                     <CalendarCheck className="w-4 h-4 text-blue-400" /> Attendance History
                   </Link>
-                </>
+                </div>
               )}
 
               {isAdmin && (
-                <>
+                <div className="space-y-1">
                   <Link
                     to="/admin/dashboard"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
                     <LayoutDashboard className="w-4 h-4 text-blue-400" /> Dashboard
                   </Link>
                   <Link
-                    to="/admin/approvals"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
-                  >
-                    <ShieldCheck className="w-4 h-4 text-blue-400" /> Approvals
-                  </Link>
-                  <Link
                     to="/admin/attendance"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
                     <CalendarCheck className="w-4 h-4 text-blue-400" /> Attendance Records
                   </Link>
                   <Link
                     to="/admin/employees"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
                     <Users className="w-4 h-4 text-blue-400" /> Employees
                   </Link>
                   <Link
+                    to="/admin/approvals"
+                    onClick={() => setMobileMenuOpen(false)}
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
+                  >
+                    <ShieldCheck className="w-4 h-4 text-blue-400" /> Requests
+                  </Link>
+                  <Link
                     to="/admin/settings"
                     onClick={() => setMobileMenuOpen(false)}
-                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-lg text-sm font-medium text-slate-200 hover:bg-slate-800"
+                    className="flex items-center gap-2.5 px-3 py-2.5 rounded-xl text-xs font-semibold text-slate-200 hover:bg-slate-800"
                   >
-                    <Settings className="w-4 h-4 text-blue-400" /> Settings
+                    <Settings className="w-4 h-4 text-blue-400" /> Shift Rules
                   </Link>
-                </>
+                </div>
               )}
 
               <button
@@ -267,7 +281,7 @@ const Navbar = () => {
                   setMobileMenuOpen(false);
                   handleLogout();
                 }}
-                className="w-full mt-3 flex items-center justify-center gap-2 py-2.5 px-4 rounded-lg text-sm font-medium text-rose-300 bg-rose-950/40 border border-rose-800/50"
+                className="w-full mt-3 flex items-center justify-center gap-2 py-2.5 px-4 rounded-xl text-xs font-bold text-rose-300 bg-rose-950/40 border border-rose-900/60"
               >
                 <LogOut className="w-4 h-4" /> Sign Out
               </button>
@@ -277,24 +291,23 @@ const Navbar = () => {
               <Link
                 to="/login"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-center py-2.5 px-4 rounded-lg text-sm font-medium text-slate-200 bg-slate-800 hover:bg-slate-700"
+                className="block text-center py-2.5 px-4 rounded-xl text-xs font-semibold text-slate-200 bg-slate-800 hover:bg-slate-700"
               >
-                Sign In
+                Employee Login
               </Link>
               <Link
                 to="/register"
                 onClick={() => setMobileMenuOpen(false)}
-                className="block text-center py-2.5 px-4 rounded-lg text-sm font-semibold text-white bg-blue-600 hover:bg-blue-500"
+                className="block text-center py-2.5 px-4 rounded-xl text-xs font-bold text-white bg-blue-600 hover:bg-blue-500"
               >
-                Register Staff
+                Get Started
               </Link>
             </div>
           )}
         </div>
       )}
-    </nav>
+    </header>
   );
 };
 
 export default Navbar;
-
