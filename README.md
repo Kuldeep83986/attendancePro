@@ -30,17 +30,6 @@ Open **[http://localhost:5173](http://localhost:5173)** in your browser!
 
 ---
 
-## 🔑 Default Credentials
-
-- **Admin Account (Store Manager)**:
-  - **Email**: `admin@attendancepro.com`
-  - **Password**: `Admin@123`
-- **Employee Registration**:
-  - Staff can self-register at `/register`
-  - Admin approves requests in `/admin/approvals` and assigns auto-incrementing Employee IDs (`EMP-001`, `EMP-002`, etc.)
-
----
-
 ## 📋 Attendance Rules & Workflow
 
 1. **Shift Schedule**:

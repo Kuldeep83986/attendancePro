@@ -89,10 +89,6 @@ npm run dev
 npm start
 ```
 
-### Default Admin Credentials (from `npm run seed`)
-- **Email**: `admin@attendancepro.com`
-- **Password**: `Admin@123`
-
 ---
 
 ## 🧪 Testing
